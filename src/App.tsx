@@ -6,14 +6,14 @@ import { DotPattern } from "@/components/magicui/dot-pattern"
 import { MagicCard } from "@/components/magicui/magic-card"
 import { ShimmerButton } from "@/components/magicui/shimmer-button"
 import Aurora from "@/components/reactbits/Aurora"
-import { about, profile, projects, skills } from "@/content"
+import { about, experience, profile, projects, skills } from "@/content"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
 
 // three.js is loaded in its own chunk so the text renders first
 const HeroScene = lazy(() => import("@/components/HeroScene"))
 
-const nav = ["About", "Projects", "Skills", "Contact"]
+const nav = ["About", "Experience", "Projects", "Skills", "Contact"]
 
 function Header() {
   const [open, setOpen] = useState(false)
@@ -145,14 +145,40 @@ function About() {
   )
 }
 
+function Experience() {
+  return (
+    <Section id="experience" num="02." title="Experience">
+      <ol className="border-border relative ml-2 space-y-10 border-l">
+        {experience.map((e, i) => (
+          <li key={e.title} className="exp-item relative pl-8">
+            <span className="bg-accent ring-background absolute top-1.5 -left-[5px] h-2.5 w-2.5 rounded-full ring-4" />
+            <BlurFade inView delay={0.1 + i * 0.08}>
+              <p className="text-muted font-mono text-xs">{e.period}</p>
+              <h3 className="mt-1 text-lg font-semibold">
+                {e.title} <span className="text-accent">· {e.org}</span>
+              </h3>
+              <p className="text-muted mt-1 max-w-2xl text-sm">{e.description}</p>
+            </BlurFade>
+          </li>
+        ))}
+      </ol>
+    </Section>
+  )
+}
+
 function Projects() {
   return (
-    <Section id="projects" num="02." title="Projects">
+    <Section id="projects" num="03." title="Projects">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((p, i) => (
-          <BlurFade key={p.title} inView delay={0.1 + i * 0.1} className="h-full">
+          <BlurFade
+            key={p.title}
+            inView
+            delay={0.1 + i * 0.1}
+            className={cn("h-full", i === 0 && "lg:col-span-2")}
+          >
             <MagicCard
-              className="h-full rounded-xl"
+              className="h-full rounded-xl [&>div:last-child]:h-full"
               gradientColor="#1e1b4b"
               gradientFrom="#a78bfa"
               gradientTo="#38bdf8"
@@ -161,20 +187,23 @@ function Projects() {
                 <div className="mb-5 flex items-center justify-between">
                   <span className="text-accent text-2xl">◆</span>
                   <div className="flex gap-4 text-sm">
-                    {p.github && (
-                      <a href={p.github} target="_blank" rel="noopener" className="text-muted hover:text-accent">
-                        GitHub
+                    {p.links?.map((l) => (
+                      <a key={l.label} href={l.href} target="_blank" rel="noopener" className="text-muted hover:text-accent">
+                        {l.label} ↗
                       </a>
-                    )}
-                    {p.live && (
-                      <a href={p.live} target="_blank" rel="noopener" className="text-muted hover:text-accent">
-                        Live
-                      </a>
-                    )}
+                    ))}
                   </div>
                 </div>
+                <p className="text-accent mb-1 font-mono text-xs">{p.context}</p>
                 <h3 className="mb-2 text-lg font-semibold">{p.title}</h3>
-                <p className="text-muted mb-6 flex-1 text-sm">{p.description}</p>
+                <p className="text-muted mb-3 text-sm">{p.description}</p>
+                {p.role && (
+                  <p className="text-muted mb-3 text-sm">
+                    <span className="text-foreground font-medium">My role: </span>
+                    {p.role}
+                  </p>
+                )}
+                <div className="flex-1" />
                 <Tags items={p.tags} />
               </article>
             </MagicCard>
@@ -199,7 +228,7 @@ function Tags({ items, itemClassName }: { items: string[]; itemClassName?: strin
 
 function Skills() {
   return (
-    <Section id="skills" num="03." title="Skills">
+    <Section id="skills" num="04." title="Skills">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {skills.map((s, i) => (
           <BlurFade key={s.group} inView delay={0.1 + i * 0.08}>
@@ -223,7 +252,7 @@ function Contact() {
       />
       <div className="relative mx-auto max-w-2xl px-4 text-center">
         <BlurFade inView>
-          <p className="text-accent mb-3 font-mono">04. What's next?</p>
+          <p className="text-accent mb-3 font-mono">05. What's next?</p>
           <h2 className="mb-5 text-4xl font-bold sm:text-5xl">Get in touch</h2>
           <p className="text-muted mb-10 text-lg">
             I'm open to internships, thesis collaborations and interesting projects. My inbox is always open.
@@ -299,6 +328,7 @@ export default function App() {
       <main>
         <Hero />
         <About />
+        <Experience />
         <Projects />
         <Skills />
         <Contact />
