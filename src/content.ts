@@ -1,6 +1,8 @@
 // All the text on the site lives here. Replace the [bracketed placeholders]
 // with your own details; the layout picks up changes automatically.
 
+const img = (name: string) => `${import.meta.env.BASE_URL}work/${name}`
+
 export const profile = {
   name: "Mikey",
   lastName: "[Last name]",
@@ -15,6 +17,10 @@ export const profile = {
   ],
 }
 
+// The large statement under the hero
+export const intro =
+  "I study Software Engineering and Management in Gothenburg, and I like building things that meet the real world: self-driving miniature cars, connected hardware, and an asteroid impact simulator built in a weekend for NASA."
+
 export const about = [
   "I'm a student in the Software Engineering and Management programme at the University of Gothenburg, where I combine hands-on programming with the methods, processes and people side of building software.",
   "[Add a few sentences about what got you into software, what you enjoy working on, and what you are looking for next, for example an internship, thesis or part-time role.]",
@@ -27,12 +33,15 @@ export type Project = {
   description: string
   role?: string
   tags: string[]
+  /** Placeholder artwork in public/work. Swap for real screenshots or photos. */
+  image: string
   links?: { label: string; href: string }[]
 }
 
 export const projects: Project[] = [
   {
     title: "Impactor",
+    image: img("impactor.jpg"),
     context: "NASA Space Apps Hackathon",
     description:
       "An asteroid impact simulator on a 3D globe. Pick a real near-Earth asteroid from NASA's NEO data, change its size, velocity and trajectory, and see the crater, shockwave, tsunami and affected population.",
@@ -40,6 +49,7 @@ export const projects: Project[] = [
   },
   {
     title: "Autonomous miniature car",
+    image: img("car.jpg"),
     context: "Cyber-Physical Systems, 2026",
     description:
       "Software for a self-driving miniature car. It detects blue and yellow cones with OpenCV, finds the midline between them and steers with a proportional controller. Built in a team of four with CI and coverage on GitLab.",
@@ -47,6 +57,7 @@ export const projects: Project[] = [
   },
   {
     title: "Carduino",
+    image: img("carduino.jpg"),
     context: "System Development",
     description:
       "An affordable IoT remote-control car on a Wio Terminal, driven from a web app over MQTT, with live temperature and accelerometer diagnostics, lights, a buzzer, auto power-off and auto-stop when the connection drops.",
@@ -56,6 +67,7 @@ export const projects: Project[] = [
   },
   {
     title: "CineMate",
+    image: img("cinemate.jpg"),
     context: "Web Engineering",
     description:
       "A movie and series discovery app with likes, a watchlist, recommendations and games like Tinder-style swiping, \"This or That\" and \"Match the Quote\".",
@@ -64,6 +76,7 @@ export const projects: Project[] = [
   },
   {
     title: "Bank System",
+    image: img("bank.jpg"),
     context: "Agile Software Project Management",
     description:
       "A desktop banking app with accounts, cards, transfers, loans, savings, a currency converter and stock tracking, delivered over eight Scrum sprints.",
