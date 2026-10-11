@@ -1,161 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mikey | Software Engineering & Management</title>
-  <meta name="description" content="Portfolio of Mikey, software engineering and management student at the University of Gothenburg.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header class="site-header">
-    <nav class="nav container">
-      <a href="#top" class="logo">mikey<span>.dev</span></a>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><button class="theme-toggle" aria-label="Toggle dark mode">◐</button></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main id="top">
-    <!-- Hero -->
-    <section class="hero container">
-      <p class="eyebrow">Hi, my name is</p>
-      <h1>Mikey <span class="muted">[Last name]</span></h1>
-      <h2 class="tagline">Software Engineering &amp; Management student at the University of Gothenburg.</h2>
-      <p class="lead">
-        <!-- TODO: replace with your own one-line pitch -->
-        I build software and think about how teams build it well. Currently exploring AI engineering,
-        web development and agile ways of working.
-      </p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">See my work</a>
-        <a href="#contact" class="btn btn-ghost">Get in touch</a>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="section container">
-      <h2 class="section-title"><span class="num">01.</span> About me</h2>
-      <div class="about-grid">
-        <div class="about-text">
-          <!-- TODO: replace placeholder bio -->
-          <p>
-            I'm a student in the Software Engineering and Management programme at the University of Gothenburg,
-            where I combine hands-on programming with the methods, processes and people side of building software.
-          </p>
-          <p>
-            [Add a few sentences about what got you into software, what you enjoy working on, and what you are
-            looking for next, for example an internship, thesis or part-time role.]
-          </p>
-          <p>Outside of studies, I [hobbies / interests].</p>
-        </div>
-        <div class="about-photo" aria-label="Profile photo placeholder">
-          <!-- TODO: replace with <img src="assets/profile.jpg" alt="Mikey"> -->
-          <span>M</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="section container">
-      <h2 class="section-title"><span class="num">02.</span> Projects</h2>
-      <div class="cards">
-        <!-- TODO: replace each card with a real project -->
-        <article class="card">
-          <div class="card-top">
-            <span class="card-icon">◆</span>
-            <div class="card-links">
-              <a href="#" aria-label="GitHub repository">GitHub</a>
-            </div>
-          </div>
-          <h3>AI Engineering coursework</h3>
-          <p>[Describe the project: the problem, what you built, and what you learned. Mention results if you have them.]</p>
-          <ul class="tags"><li>Python</li><li>Machine Learning</li><li>LLMs</li></ul>
-        </article>
-
-        <article class="card">
-          <div class="card-top">
-            <span class="card-icon">◆</span>
-            <div class="card-links">
-              <a href="#" aria-label="GitHub repository">GitHub</a>
-              <a href="#" aria-label="Live demo">Live</a>
-            </div>
-          </div>
-          <h3>Team software project</h3>
-          <p>[A course project built in a team using Scrum. What was your role, and what did the team deliver?]</p>
-          <ul class="tags"><li>Java</li><li>Scrum</li><li>Git</li></ul>
-        </article>
-
-        <article class="card">
-          <div class="card-top">
-            <span class="card-icon">◆</span>
-            <div class="card-links">
-              <a href="#" aria-label="GitHub repository">GitHub</a>
-            </div>
-          </div>
-          <h3>This portfolio</h3>
-          <p>A lightweight static site built with plain HTML, CSS and JavaScript, hosted on GitHub Pages.</p>
-          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- Skills -->
-    <section id="skills" class="section container">
-      <h2 class="section-title"><span class="num">03.</span> Skills</h2>
-      <!-- TODO: adjust to your actual skills -->
-      <div class="skills-grid">
-        <div class="skill-group">
-          <h3>Languages</h3>
-          <ul class="tags"><li>Java</li><li>Python</li><li>JavaScript</li><li>SQL</li></ul>
-        </div>
-        <div class="skill-group">
-          <h3>Tools &amp; Frameworks</h3>
-          <ul class="tags"><li>Git &amp; GitHub</li><li>Docker</li><li>React</li><li>PyTorch</li></ul>
-        </div>
-        <div class="skill-group">
-          <h3>Engineering practice</h3>
-          <ul class="tags"><li>Agile / Scrum</li><li>Testing</li><li>CI/CD</li><li>Requirements</li></ul>
-        </div>
-        <div class="skill-group">
-          <h3>Management</h3>
-          <ul class="tags"><li>Project planning</li><li>Team leadership</li><li>Stakeholder communication</li></ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="section container contact">
-      <h2 class="section-title center"><span class="num">04.</span> Get in touch</h2>
-      <p class="lead center">
-        I'm open to internships, thesis collaborations and interesting projects. My inbox is always open.
-      </p>
-      <!-- TODO: replace with your real email -->
-      <a href="mailto:you@example.com" class="btn btn-primary">Say hello</a>
-      <ul class="socials">
-        <!-- TODO: replace with your real profile links -->
-        <li><a href="https://github.com/Makanj456" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="#" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="#" target="_blank" rel="noopener">CV (PDF)</a></li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>© <span id="year"></span> Mikey. Built with HTML, CSS &amp; JS.</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio of Mikey, software engineering and management student at the University of Gothenburg." />
+    <title>Mikey | Software Engineering & Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
