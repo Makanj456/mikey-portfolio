@@ -8,6 +8,8 @@ export default defineConfig({
   // Served from https://makanj456.github.io/mikey-portfolio/
   base: '/mikey-portfolio/',
   plugins: [react(), tailwindcss()],
+  // three.js is lazy-loaded in its own ~130 kB (gzipped) chunk
+  build: { chunkSizeWarningLimit: 700 },
   resolve: {
     alias: { '@': path.resolve(import.meta.dirname, './src') },
   },

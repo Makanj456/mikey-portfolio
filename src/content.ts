@@ -48,8 +48,8 @@ export const projects: Project[] = [
   {
     title: "This portfolio",
     description:
-      "Built with React, Tailwind CSS and animated components from Magic UI and React Bits, deployed on GitHub Pages.",
-    tags: ["React", "TypeScript", "Tailwind"],
+      "Built with React, Tailwind CSS, GSAP and three.js, plus components from Magic UI and React Bits. Deployed on GitHub Pages.",
+    tags: ["React", "GSAP", "three.js"],
     github: "https://github.com/Makanj456/mikey-portfolio",
   },
 ]

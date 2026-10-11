@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { lazy, Suspense, useRef, useState } from "react"
+import { useGSAP } from "@gsap/react"
 
 import { BlurFade } from "@/components/magicui/blur-fade"
 import { DotPattern } from "@/components/magicui/dot-pattern"
@@ -6,7 +7,11 @@ import { MagicCard } from "@/components/magicui/magic-card"
 import { ShimmerButton } from "@/components/magicui/shimmer-button"
 import Aurora from "@/components/reactbits/Aurora"
 import { about, profile, projects, skills } from "@/content"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
+
+// three.js is loaded in its own chunk so the text renders first
+const HeroScene = lazy(() => import("@/components/HeroScene"))
 
 const nav = ["About", "Projects", "Skills", "Contact"]
 
@@ -14,6 +19,7 @@ function Header() {
   const [open, setOpen] = useState(false)
   return (
     <header className="border-border/60 bg-background/70 fixed inset-x-0 top-0 z-50 border-b backdrop-blur-md">
+      <div className="scroll-progress from-accent absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r to-sky-400" />
       <nav className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
         <a href="#top" className="font-mono text-lg">
           mikey<span className="text-accent">.dev</span>
@@ -59,6 +65,12 @@ function Hero() {
         <Aurora colorStops={["#7c3aed", "#38bdf8", "#7c3aed"]} amplitude={1.0} blend={0.6} speed={0.6} />
       </div>
       <div className="from-background/0 to-background pointer-events-none absolute inset-0 bg-gradient-to-b from-40%" />
+      {/* three.js: wireframe shape on the right (faint behind the text on phones) */}
+      <div className="hero-scene absolute top-[12%] right-[-25%] h-[55%] w-[100%] opacity-30 md:top-[15%] md:right-0 md:h-[70%] md:w-[50%] md:opacity-100">
+        <Suspense fallback={null}>
+          <HeroScene />
+        </Suspense>
+      </div>
 
       <div className="relative mx-auto w-full max-w-5xl px-4 pt-16 sm:px-6">
         <BlurFade delay={0.1}>
@@ -102,7 +114,7 @@ function Section({ id, num, title, children }: { id: string; num: string; title:
         <h2 className="mb-10 flex items-center gap-3 text-3xl font-bold">
           <span className="text-accent font-mono text-lg font-normal">{num}</span>
           {title}
-          <span className="bg-border ml-3 hidden h-px max-w-xs flex-1 sm:block" />
+          <span className="section-rule bg-border ml-3 hidden h-px max-w-xs flex-1 origin-left sm:block" />
         </h2>
       </BlurFade>
       {children}
@@ -173,11 +185,11 @@ function Projects() {
   )
 }
 
-function Tags({ items }: { items: string[] }) {
+function Tags({ items, itemClassName }: { items: string[]; itemClassName?: string }) {
   return (
     <ul className="flex flex-wrap gap-2">
       {items.map((t) => (
-        <li key={t} className="bg-accent/10 text-accent rounded-full px-3 py-1 font-mono text-xs">
+        <li key={t} className={cn("bg-accent/10 text-accent rounded-full px-3 py-1 font-mono text-xs", itemClassName)}>
           {t}
         </li>
       ))}
@@ -193,7 +205,7 @@ function Skills() {
           <BlurFade key={s.group} inView delay={0.1 + i * 0.08}>
             <div className="border-border h-full rounded-xl border p-6">
               <h3 className="mb-4 font-semibold">{s.group}</h3>
-              <Tags items={s.items} />
+              <Tags items={s.items} itemClassName="skill-tag" />
             </div>
           </BlurFade>
         ))}
@@ -237,8 +249,52 @@ function Contact() {
 }
 
 export default function App() {
+  const root = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      // Thin progress bar under the header, tied to page scroll
+      gsap.to(".scroll-progress", {
+        scaleX: 1,
+        ease: "none",
+        scrollTrigger: { start: 0, end: "max", scrub: 0.3 },
+      })
+
+      const mm = gsap.matchMedia()
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // The 3D shape drifts up and fades as you scroll past the hero
+        gsap.to(".hero-scene", {
+          yPercent: -25,
+          autoAlpha: 0,
+          ease: "none",
+          scrollTrigger: { trigger: "#top", start: "top top", end: "bottom top", scrub: 1 },
+        })
+
+        // Section heading rules draw in from the left
+        gsap.utils.toArray<HTMLElement>(".section-rule").forEach((rule) => {
+          gsap.from(rule, {
+            scaleX: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: { trigger: rule, start: "top 85%" },
+          })
+        })
+
+        // Skill tags pop in, staggered, as each card enters
+        gsap.set(".skill-tag", { autoAlpha: 0, y: 12, scale: 0.9 })
+        ScrollTrigger.batch(".skill-tag", {
+          start: "top 90%",
+          once: true,
+          onEnter: (batch) =>
+            gsap.to(batch, { autoAlpha: 1, y: 0, scale: 1, stagger: 0.04, ease: "back.out(2)", overwrite: true }),
+        })
+      })
+    },
+    { scope: root }
+  )
+
   return (
-    <>
+    <div ref={root}>
       <Header />
       <main>
         <Hero />
@@ -250,6 +306,6 @@ export default function App() {
       <footer className="border-border text-muted border-t py-8 text-center text-sm">
         © {new Date().getFullYear()} {profile.name}. Built with React, Magic UI &amp; React Bits.
       </footer>
-    </>
+    </div>
   )
 }
